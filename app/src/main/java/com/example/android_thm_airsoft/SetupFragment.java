@@ -63,17 +63,11 @@ public class SetupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        Toast.makeText(getContext(),"SETUP FRAGMENT",Toast.LENGTH_SHORT).show();
-
-
+       // Toast.makeText(getContext(),"SETUP FRAGMENT",Toast.LENGTH_SHORT).show();
 
     }
     private  TextView textString;
@@ -86,10 +80,6 @@ public class SetupFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_setup, container,    false);
         return rootView;
 
-
-
-     // TextView textString=(TextView)getView().findViewById(R.id.txtFragString);
-        //TextView textString=(TextView) getView().findViewById(R.id.txtFragString);
     }
 
     public void setFragTextView(String text){
@@ -115,12 +105,7 @@ public class SetupFragment extends Fragment {
         ArmPinCode=viewModel.getFragArmPinCode().getValue();
         DisarmPinCode=viewModel.getFragDisarmPinCode().getValue();
         setFragTextView(GameTime);
-//
 
-/*        items.setOnClickListener(item -> {
-            // Set a new item
-            viewModel.select(item);
-        });*/
     }
 
 

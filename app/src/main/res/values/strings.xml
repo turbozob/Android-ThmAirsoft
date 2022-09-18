@@ -3,4 +3,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="txt_setup_fragment_name">Setup fragment</string>
     <string name="txt_game_fragment_name">Game fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hintBombTime">Enter Bomb Time</string>
+    <string name="hintGameTime">Enter Game Time</string>
+    <string name="hintDisarmPinCode">Enter Disarm Pin Code</string>
+    <string name="hintArmPinCode">Enter Arm Pin Code</string>
+    <string name="txt_button_start_game">Next</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.example.android_thm_airsoft;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,9 +38,8 @@ private ItemViewModel viewModel;
 
         // mainactivity and fragment share data
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-  /*      viewModel.getSelectedItem().observe(this, item -> {
-            // Perform an action with the latest item data
-        });*/
+
+
 // settings default values on startup
         viewModel.setFragGameTime("60");
         viewModel.setFragBombTime("300");
@@ -47,8 +49,6 @@ private ItemViewModel viewModel;
         Button btnOpenGameFragment = (Button) findViewById(R.id.btnOpenGameFragment);
         btnOpenGameFragment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-
 
                 if (setupScreen)
                 {
@@ -66,41 +66,11 @@ private ItemViewModel viewModel;
                     setupScreen=true;
                 }
 
-
-
-         /*       FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, ExampleFragment.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("name") // name can be null
-                        .commit();*/
-
-
             } // end button on click
-        });
+
+        }); // END onClick
+
+    } // END onCreate
 
 
-
-
-
-
-
-
-    }
-    // ON CREATE END
-/*    public class SharedViewModel extends ViewModel {
-        private final MutableLiveData<ClipData.Item> selected = new MutableLiveData<ClipData.Item>();
-
-        public void select(ClipData.Item item) {
-            selected.setValue(item);
-        }
-
-        public LiveData<ClipData.Item> getSelected() {
-            return selected;
-        }
-    }*/
-
-
-
-
-} // MainActivity class
+} // End MainActivity class
