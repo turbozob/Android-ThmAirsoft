@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Android-THM_AirSoft</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_setup_fragment_name">Setup fragment</string>
+    <string name="txt_game_fragment_name">Game fragment</string>
+</resources>

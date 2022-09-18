@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".SetupFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/txtFragName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:text="@string/txt_setup_fragment_name"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/txtGameTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text=""
+        android:textColor="@color/white"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/txtBombTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text=""
+        android:textColor="@color/white"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txtFragString"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/txt_setup_fragment_name"
+        android:textColor="@color/white" />
+
+
+</FrameLayout>
