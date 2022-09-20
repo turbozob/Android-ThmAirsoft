@@ -26,7 +26,7 @@ import android.widget.Toast;
 public class SetupFragment extends Fragment {
 
    // private TextView textString;
-
+   private EditText GameTimerEditText, BombTimerEditText,ArmPinCodeEditText,DisarmPinCodeEditText;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,6 +69,7 @@ public class SetupFragment extends Fragment {
         }
        // Toast.makeText(getContext(),"SETUP FRAGMENT",Toast.LENGTH_SHORT).show();
 
+
     }
     private  TextView textString;
 
@@ -86,8 +87,18 @@ public class SetupFragment extends Fragment {
         TextView textView = (TextView) getView().findViewById(R.id.txtFragString);
         textView.setText(text);
     }
+    public void setFragEditText(String text, int R_id_resource){
 
+        EditText FcEditText = (EditText) getView().findViewById(R_id_resource);
+        FcEditText.setText(text);
 
+    }
+/*    public void setFragEditText(String text,int R_id_resource){
+
+        EditText FcEditText = (EditText) getView().findViewById(R.id.txtGameTime);
+        FcEditText.setText(text);
+
+    }*/
 
     private ItemViewModel viewModel;
     public String GameTime;
@@ -104,7 +115,11 @@ public class SetupFragment extends Fragment {
         BombTime=viewModel.getFragBombTime().getValue();
         ArmPinCode=viewModel.getFragArmPinCode().getValue();
         DisarmPinCode=viewModel.getFragDisarmPinCode().getValue();
-        setFragTextView(GameTime);
+       // setFragTextView(GameTime);
+        setFragEditText(GameTime,R.id.txtGameTime);
+        setFragEditText(BombTime,R.id.txtBombTime);
+        setFragEditText(ArmPinCode,R.id.txtArmPinCode);
+        setFragEditText(DisarmPinCode,R.id.txtDisarmPinCode);
 
     }
 

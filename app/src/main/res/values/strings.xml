@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">Android-THM_AirSoft</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="txt_setup_fragment_name">Setup fragment</string>
-    <string name="txt_game_fragment_name">Game fragment</string>
+    <string name="lbl_setup_fragment_name">THM AIRSOFT RUSH</string>
+    <string name="lbl_game_fragment_name">THM AIRSOFT RUSH</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hintBombTime">Enter Bomb Time</string>
-    <string name="hintGameTime">Enter Game Time</string>
-    <string name="hintDisarmPinCode">Enter Disarm Pin Code</string>
-    <string name="hintArmPinCode">Enter Arm Pin Code</string>
-    <string name="txt_button_start_game">Next</string>
+    <string name="hintGameTime">Enter Time</string>
+    <string name="hintBombTime">Enter Time</string>
+    <string name="hintDisarmPinCode">Enter Code</string>
+    <string name="hintArmPinCode">Enter Code</string>
+    <string name="txt_button_start_game">START GAME</string>
+    <string name="lbl_game_time">Game Timer:</string>
+    <string name="lbl_bomb_time">Bobs Timer:</string>
+    <string name="lbl_arm_pin_code">Arm Pin Code:</string>
+    <string name="lbl_disarm_pin_code">Disarm Pin Code:</string>
+    <string name="lbl_FragSetup_Sub_Name">Setup your game and press START</string>
+    <string name="lbl_FragGame_Sub_Name">Game is active</string>
 </resources>

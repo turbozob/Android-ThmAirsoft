@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="22dp"
+    android:paddingRight="22dp"
     android:id="@+id/setup_frame_layout"
     android:background="@color/black"
     android:imeOptions="actionDone"
@@ -15,9 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:text="@string/txt_setup_fragment_name"
+        android:text="@string/lbl_setup_fragment_name"
         android:textAlignment="center"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size"/>
 
     <TextView
         android:id="@+id/txtFragString"
@@ -25,76 +28,140 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtFragName"
         android:layout_centerInParent="true"
-        android:text="txtFragString"
+        android:text="@string/lbl_FragSetup_Sub_Name"
         android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/textGameTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtFragString"
+        android:layout_gravity="center|end"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:text="@string/lbl_game_time"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size"
+
+        />
+
+    <TextView
+        android:id="@+id/textBombTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textGameTime"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:text="@string/lbl_bomb_time"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size" />
+
+    <TextView
+        android:id="@+id/textArmPinCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:layout_gravity="center|start"
+        android:layout_below="@+id/textBombTime"
+        android:text="@string/lbl_arm_pin_code"
+        android:textSize="@dimen/main_textView_size"
+
+        />
+
+    <TextView
+        android:id="@+id/textDisarmPinCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textArmPinCode"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:text="@string/lbl_disarm_pin_code"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size"
+
+        />
 
     <EditText
         android:id="@+id/txtGameTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtFragString"
-        android:layout_gravity="center|start"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
         android:background="@drawable/custom_input"
-        android:ems="10"
+        android:ems="8"
         android:focusableInTouchMode="true"
         android:hint="@string/hintGameTime"
         android:imeOptions="actionDone"
         android:inputType="number"
+        android:maxLength="6"
         android:text=""
         android:textAlignment="center"
-        android:textSize="25dp"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_editText_size" />
 
     <EditText
         android:id="@+id/txtBombTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtGameTime"
-        android:layout_gravity="center|start"
-        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:background="@drawable/custom_input"
+        android:ems="8"
+        android:maxLength="6"
         android:focusableInTouchMode="true"
-        android:imeOptions="actionDone"
         android:hint="@string/hintBombTime"
+        android:imeOptions="actionDone"
         android:inputType="number"
         android:text=""
-        android:background="@drawable/custom_input"
         android:textAlignment="center"
-        android:textSize="25dp"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_editText_size" />
 
     <EditText
         android:id="@+id/txtArmPinCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtBombTime"
-        android:layout_gravity="center|start"
-        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:background="@drawable/custom_input"
+        android:ems="8"
+        android:maxLength="6"
         android:focusableInTouchMode="true"
-        android:imeOptions="actionDone"
         android:hint="@string/hintArmPinCode"
+        android:imeOptions="actionDone"
         android:inputType="number"
         android:text=""
-        android:background="@drawable/custom_input"
         android:textAlignment="center"
-        android:textSize="25dp"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_editText_size" />
 
     <EditText
         android:id="@+id/txtDisarmPinCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtArmPinCode"
-        android:layout_gravity="center|start"
-        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:background="@drawable/custom_input"
+        android:ems="8"
+        android:maxLength="6"
         android:focusableInTouchMode="true"
-        android:imeOptions="actionDone"
         android:hint="@string/hintDisarmPinCode"
+        android:imeOptions="actionDone"
         android:inputType="number"
         android:text=""
-        android:background="@drawable/custom_input"
         android:textAlignment="center"
-        android:textSize="25dp"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_editText_size" />
+
+
 
 
 </RelativeLayout>

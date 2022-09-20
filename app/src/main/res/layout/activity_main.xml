@@ -11,14 +11,16 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btnOpenGameFragment"
+        android:layout_above="@id/btnStartGameFragment"
         />
 
     <Button
-        android:id="@+id/btnOpenGameFragment"
+        android:id="@+id/btnStartGameFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:textSize="@dimen/main_textView_size"
         android:text="@string/txt_button_start_game" />
+
 </RelativeLayout>
