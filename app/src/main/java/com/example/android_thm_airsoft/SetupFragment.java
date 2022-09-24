@@ -84,7 +84,7 @@ public class SetupFragment extends Fragment {
     }
 
     public void setFragTextView(String text){
-        TextView textView = (TextView) getView().findViewById(R.id.txtFragString);
+        TextView textView = (TextView) getView().findViewById(R.id.lblFragString);
         textView.setText(text);
     }
     public void setFragEditText(String text, int R_id_resource){
@@ -111,11 +111,13 @@ public class SetupFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 
+        // get values from viewModel
         GameTime=viewModel.getFragGameTime().getValue();
         BombTime=viewModel.getFragBombTime().getValue();
         ArmPinCode=viewModel.getFragArmPinCode().getValue();
         DisarmPinCode=viewModel.getFragDisarmPinCode().getValue();
-       // setFragTextView(GameTime);
+
+       // update UI EditText with values from viewModel
         setFragEditText(GameTime,R.id.txtGameTime);
         setFragEditText(BombTime,R.id.txtBombTime);
         setFragEditText(ArmPinCode,R.id.txtArmPinCode);

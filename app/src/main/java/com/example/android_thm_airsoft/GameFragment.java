@@ -2,11 +2,17 @@ package com.example.android_thm_airsoft;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -28,7 +34,8 @@ public class GameFragment extends Fragment {
     public GameFragment() {
         // Required empty public constructor
     }
-
+    private TextView gameTextViewTimer, bombTextViewTimer;
+    private  TextView textString;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -47,6 +54,8 @@ public class GameFragment extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +69,77 @@ public class GameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+
+
+        View view = inflater.inflate(R.layout.fragment_game,
+                container, false);
+
+        // update UI EditText with values from viewModel
+        TextView winnerText = (TextView) view.findViewById(R.id.lblCurrentGameTime);
+        winnerText.setText("WTF");
+
+
+        Button button = (Button) view.findViewById(R.id.btnArmDefuse);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(getContext(),"GAME FRAGMENT",Toast.LENGTH_SHORT).show();
+                // do something
+                winnerText.setText("WTF");
+            }
+        });
+        return view;
+
     }
+
+
+
+    private ItemViewModel viewModel;
+    public String currentGameTime;
+    public String currentBombTime;
+    public TextView lblCurrentGameTimeTxt;
+    public Button btnPlant;
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        lblCurrentGameTimeTxt = (TextView) view.findViewById(R.id.lblCurrentGameTime);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+
+        // get values from viewModel
+        currentGameTime=viewModel.getCurrentGameTime().getValue();
+        currentBombTime=viewModel.getCurrentBombTime().getValue();
+
+        // update UI EditText with values from viewModel
+        int R_ID= R.id.lblCurrentGameTime;
+        String R_ID_STR="";
+        setFragTextView(currentGameTime,R.id.lblCurrentGameTime);
+        R_ID= R.id.lblCurrentArmDefuseTime;
+        setFragTextView(currentBombTime,R.id.lblCurrentArmDefuseTime);
+        R_ID= R.id.textViewTEST;
+
+        setFragTextView("DAFUQ",R.id.textViewTEST);
+
+
+
+
+
+    }
+
+    public void setFragTextView(String text, int R_id_resource){
+        TextView FcTextView = (TextView) getView().findViewById(R_id_resource);
+        FcTextView.setText(text);
+    }
+
+    // Your new method
+   public void setNewText(String text) {
+       setFragTextView(currentBombTime,R.id.textViewTEST);
+    }
+
+
 }

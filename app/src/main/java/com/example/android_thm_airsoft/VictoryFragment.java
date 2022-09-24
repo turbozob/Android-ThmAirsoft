@@ -2,11 +2,27 @@ package com.example.android_thm_airsoft;
 
 import android.os.Bundle;
 
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +43,9 @@ public class VictoryFragment extends Fragment {
     public VictoryFragment() {
         // Required empty public constructor
     }
+    // globally
+    private  TextView textString;
+    public View viewPublic;
 
     /**
      * Use this factory method to create a new instance of
@@ -53,12 +72,44 @@ public class VictoryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //setFragTextView("DEFENDERS WIN");
+       // TextView textView = (TextView) getView().findViewById(R.id.lbl_Winner_Victory);
+        //TextViewCompat.setTextAppearance(textView, R.style.attackers_win_style);
+
+
     }
+    public void setFragTextView(String text){
+        TextView textView = (TextView) viewPublic.findViewById(R.id.lbl_Winner_Victory);
+        textView.setText(text);
+    }
+
+    private ItemViewModel viewModel;
+    public String WinnerName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_victory, container, false);
+
+
+        // -- inflate the layout for this fragment
+        View myInflatedView = inflater.inflate(R.layout.fragment_victory, container,false);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        // get values from viewModel
+        WinnerName=viewModel.getFragWinnerName().getValue();
+
+        // update UI EditText with values from viewModel
+        TextView winnerText = (TextView) myInflatedView.findViewById(R.id.lbl_Winner_Victory);
+        winnerText.setText(WinnerName);
+        TextViewCompat.setTextAppearance(winnerText, R.style.attackers_win_style);
+
+        return myInflatedView;
+
     }
+    public void setText(String text) {
+        TextView textView = (TextView) getView().findViewById(R.id.lbl_Winner_Victory);
+        textView.setText(text);
+    }
+
+
 }

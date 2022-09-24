@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     android:paddingLeft="22dp"
     android:paddingRight="22dp"
+    android:paddingBottom="22dp"
+    android:paddingTop="22dp"
     android:id="@+id/setup_frame_layout"
     android:background="@color/black"
     android:imeOptions="actionDone"
     tools:context=".SetupFragment">
     <!-- TODO: Relative layout in fragment layout -->
-
     <TextView
-        android:id="@+id/txtFragName"
+        android:id="@+id/lblFragName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -20,22 +21,22 @@
         android:text="@string/lbl_setup_fragment_name"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/main_textView_size"/>
+        android:textSize="@dimen/main_textView_size" />
 
     <TextView
-        android:id="@+id/txtFragString"
+        android:id="@+id/lblFragString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtFragName"
+        android:layout_below="@+id/lblFragName"
         android:layout_centerInParent="true"
         android:text="@string/lbl_FragSetup_Sub_Name"
         android:textColor="@color/white" />
 
     <TextView
-        android:id="@+id/textGameTime"
+        android:id="@+id/lblGameTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtFragString"
+        android:layout_below="@+id/lblFragString"
         android:layout_gravity="center|end"
         android:layout_marginTop="@dimen/main_marginTop_distance"
         android:text="@string/lbl_game_time"
@@ -46,36 +47,36 @@
         />
 
     <TextView
-        android:id="@+id/textBombTime"
+        android:id="@+id/lblBombTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textGameTime"
+        android:layout_below="@+id/lblGameTime"
         android:layout_gravity="center|start"
         android:layout_marginTop="@dimen/main_marginTop_distance"
-        android:text="@string/lbl_bomb_time"
+        android:text="Bomb Timer: "
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/main_textView_size" />
 
     <TextView
-        android:id="@+id/textArmPinCode"
+        android:id="@+id/lblArmPinCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/main_marginTop_distance"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:layout_gravity="center|start"
-        android:layout_below="@+id/textBombTime"
+        android:layout_below="@+id/lblBombTime"
         android:text="@string/lbl_arm_pin_code"
         android:textSize="@dimen/main_textView_size"
 
         />
 
     <TextView
-        android:id="@+id/textDisarmPinCode"
+        android:id="@+id/lblDisarmPinCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textArmPinCode"
+        android:layout_below="@+id/lblArmPinCode"
         android:layout_gravity="center|start"
         android:layout_marginTop="@dimen/main_marginTop_distance"
         android:text="@string/lbl_disarm_pin_code"
@@ -89,7 +90,7 @@
         android:id="@+id/txtGameTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtFragString"
+        android:layout_below="@+id/lblFragString"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/main_marginTop_distance"
         android:background="@drawable/custom_input"

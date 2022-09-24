@@ -3,19 +3,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/game_frame_layout"
+    android:paddingLeft="22dp"
+    android:paddingRight="22dp"
+    android:paddingBottom="22dp"
+    android:paddingTop="22dp"
+    android:id="@+id/game_fragment"
     android:background="@color/black"
     android:imeOptions="actionDone"
     tools:context=".GameFragment">
-
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/lblGameFragName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:text="@string/lbl_game_fragment_name"
         android:textAlignment="center"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size"/>
+
+    <TextView
+        android:id="@+id/lblCurrentGameTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblGameFragName"
+        android:layout_gravity="center|end"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size"
+        tools:text="10:00" />
+
+    <TextView
+        android:id="@+id/lblCurrentArmDefuseTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblCurrentGameTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size"
+        tools:text="05:00" />
+
+    <TextView
+        android:id="@+id/textViewTEST"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:layout_below="@+id/lblCurrentArmDefuseTime"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/lblGameStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size"
+        tools:text="ARMED / DISARMED" />
+
+    <TextView
+        android:id="@+id/lblEnterPinCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblGameStatus"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:text="@string/lbl_enter_pin_code"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_textView_size" />
+
+    <EditText
+        android:id="@+id/txtGamePinCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblEnterPinCode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:background="@drawable/custom_input"
+        android:ems="8"
+        android:focusableInTouchMode="true"
+        android:hint="@string/hintEnterPinCode"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="6"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_editText_size" />
+
+    <Button
+        android:id="@+id/btnArmDefuse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtGamePinCode"
+        android:layout_centerHorizontal="true"
+        android:text="Plant-Defuse"
+        android:textSize="@dimen/main_editText_size" />
+
+
 
 </RelativeLayout>

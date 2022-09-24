@@ -15,4 +15,10 @@
     <string name="lbl_disarm_pin_code">Disarm Pin Code:</string>
     <string name="lbl_FragSetup_Sub_Name">Setup your game and press START</string>
     <string name="lbl_FragGame_Sub_Name">Game is active</string>
+    <string name="lbl_Winner_Victory">Winner</string>
+    <string name="lbl_enter_pin_code">Pin Code</string>
+    <string name="hintEnterPinCode">Enter Pin Code</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vc">VC</string>
 </resources>

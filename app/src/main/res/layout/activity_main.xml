@@ -20,7 +20,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="@dimen/main_textView_size"
-        android:text="@string/txt_button_start_game" />
+        android:text="@string/txt_button_start_game"
+        android:textSize="@dimen/main_textView_size" />
+
+    <Button
+        android:id="@+id/btnStartVictoryFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/fragment_container"
+        android:layout_alignParentBottom="true"
+        android:text="@string/vc"
+        android:textSize="@dimen/main_textView_size" />
+
+    <Button
+        android:id="@+id/btnStarTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/fragment_container"
+        android:layout_alignParentBottom="true"
+        android:text="TIMER"
+        android:textSize="@dimen/main_textView_size" />
+
 
 </RelativeLayout>
