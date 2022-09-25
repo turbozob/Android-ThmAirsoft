@@ -3,15 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="22dp"
-    android:paddingRight="22dp"
-    android:paddingBottom="22dp"
-    android:paddingTop="22dp"
-    android:id="@+id/setup_frame_layout"
+    android:paddingLeft="@dimen/layout_padding_distance"
+    android:paddingRight="@dimen/layout_padding_distance"
+    android:paddingBottom="@dimen/layout_padding_distance"
+    android:paddingTop="@dimen/layout_padding_distance"
+    android:id="@+id/setup_fragment_id"
     android:background="@color/black"
     android:imeOptions="actionDone"
     tools:context=".SetupFragment">
     <!-- TODO: Relative layout in fragment layout -->
+    <FrameLayout
+        android:id="@+id/gameFragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <TextView
         android:id="@+id/lblFragName"
         android:layout_width="wrap_content"
@@ -152,17 +156,33 @@
         android:layout_marginTop="@dimen/main_marginTop_distance"
         android:background="@drawable/custom_input"
         android:ems="8"
-        android:maxLength="6"
         android:focusableInTouchMode="true"
         android:hint="@string/hintDisarmPinCode"
         android:imeOptions="actionDone"
         android:inputType="number"
+        android:maxLength="6"
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/main_editText_size" />
 
+    <Button
+        android:id="@+id/btnStartGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/txt_button_start_game"
+        android:textSize="@dimen/main_textView_size" />
 
+    <Button
+        android:id="@+id/btnSaveSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/gameFragment_container"
+        android:layout_alignParentBottom="true"
+        android:text="@string/txt_button_save_settings"
+        android:textSize="@dimen/main_textView_size" />
 
 
 </RelativeLayout>

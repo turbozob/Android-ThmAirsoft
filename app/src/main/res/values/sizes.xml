@@ -3,4 +3,5 @@
     <dimen name="main_textView_size">25sp</dimen>
     <dimen name="main_editText_size">25sp</dimen>
     <dimen name="main_marginTop_distance">15sp</dimen>
+    <dimen name="layout_padding_distance">5sp</dimen>
 </resources>
