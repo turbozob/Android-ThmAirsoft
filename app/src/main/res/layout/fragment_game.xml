@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_fragment_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/layout_padding_distance"
-    android:paddingRight="@dimen/layout_padding_distance"
-    android:paddingBottom="@dimen/layout_padding_distance"
-    android:paddingTop="@dimen/layout_padding_distance"
-    android:id="@+id/game_fragment_id"
     android:background="@color/black"
     android:imeOptions="actionDone"
+    android:paddingLeft="@dimen/layout_padding_distance"
+    android:paddingTop="@dimen/layout_padding_distance"
+    android:paddingRight="@dimen/layout_padding_distance"
+    android:paddingBottom="@dimen/layout_padding_distance"
     tools:context=".GameFragment">
     <!-- TODO: Update blank fragment layout -->
     <FrameLayout
         android:id="@+id/gameFragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/lblGameFragName"
         android:layout_width="wrap_content"
@@ -25,33 +26,33 @@
         android:text="@string/lbl_game_fragment_name"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/main_textView_size"/>
+        android:textSize="@dimen/main_textView_size" />
 
     <TextView
         android:id="@+id/lblCurrentGameTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblGameFragName"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center|end"
-        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:layout_alignStart="@+id/txtGamePinCode"
+        android:layout_marginStart="@dimen/main_marginHoriz_distance"
+        android:layout_marginTop="@dimen/main_marginVert_distance"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/main_textView_size"
+        android:textSize="@dimen/GameStatus_TextView_size"
         tools:text="10:00" />
 
     <TextView
         android:id="@+id/lblCurrentBombTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblCurrentGameTime"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/main_marginTop_distance"
+        android:layout_below="@+id/lblGameFragName"
+        android:layout_alignEnd="@+id/txtGamePinCode"
+        android:layout_marginTop="@dimen/main_marginVert_distance"
+        android:layout_marginEnd="@dimen/main_marginHoriz_distance"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/main_textView_size"
+        android:textSize="@dimen/GameStatus_TextView_size"
         tools:text="05:00" />
-
 
 
     <TextView
@@ -61,28 +62,15 @@
         android:layout_centerInParent="true"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/main_textView_size"
+        android:textSize="@dimen/GameStatus_TextView_size"
         tools:text="ARMED / DISARMED" />
-
-    <TextView
-        android:id="@+id/lblEnterPinCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblGameStatus"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/main_marginTop_distance"
-        android:text="@string/lbl_enter_pin_code"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/main_textView_size" />
 
     <EditText
         android:id="@+id/txtGamePinCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblEnterPinCode"
+        android:layout_below="@+id/lblGameStatus"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/main_marginTop_distance"
         android:background="@drawable/custom_input"
         android:ems="8"
         android:focusableInTouchMode="true"
@@ -93,35 +81,38 @@
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/main_textView_size" />
+        android:textSize="@dimen/GameStatus_TextView_size" />
 
     <Button
         android:id="@+id/btnArmDefuse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/gameFragment_container"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/txtGamePinCode"
+        android:layout_alignStart="@+id/txtGamePinCode"
+        android:layout_alignEnd="@+id/txtGamePinCode"
+        android:layout_centerInParent="true"
         android:text="@string/btnArmDefuse"
-        android:textSize="@dimen/main_textView_size" />
+        android:textAlignment="center"
+        android:textSize="@dimen/GameStatus_TextView_size" />
 
     <Button
         android:id="@+id/btnEndGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/gameFragment_container"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:text="@string/txt_button_end_game"
         android:textSize="@dimen/main_textView_size" />
 
     <Button
-        android:id="@+id/btnStartTimer"
+        android:id="@+id/btnDebugAttackerWin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/gameFragment_container"
         android:layout_alignParentBottom="true"
-        android:text="TIMER"
-        android:textSize="@dimen/main_textView_size" />
-
+        android:text="DEBUG"
+        android:textSize="@dimen/main_textView_size"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

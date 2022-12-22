@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,11 +40,44 @@ public class GameFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    // declare timers
+    private CountDownTimer gameCountDownTimer;
+    private CountDownTimer bombCountDownTimer;
+    private boolean GameTimerRunning;
+    private boolean BombTimerRunning;
+    private static final long START_GAME_TIME_IN_MILLIS = 22222;
+    private static final long START_BOMB_TIME_IN_MILLIS = 11111;
+    private long GameTimeLeftInMillis = START_GAME_TIME_IN_MILLIS;
+    private long BombTimeLeftInMillis = START_BOMB_TIME_IN_MILLIS;
+    private String GameTimeLeft = "";
+    private String BombTimeLeft = "";
+    private String WinnerName = "";
+
+    // declare booleans
+    private boolean StateBombArmed = false;
+    private boolean GameStarted = false;
+    private boolean BombTimerFinished = false;
+    private boolean GameTimerFinished = false;
+    private boolean GameFinished = false;
+
+    // declare buttons
+    private Button BtnArmDisarmBtn;
+
+    // declare TextView's
+    private TextView TxtEnteredPinCode, LblGameStatusArmDisarmed, LblGameTime, LblBombTime;
+
+
+    // View model variables
+    private ItemViewModel viewModel;
+    public String GameTime;
+    public String BombTime;
+    public String ArmPinCode;
+    public String DisarmPinCode;
+
     public GameFragment() {
         // Required empty public constructor
     }
-    private TextView gameTextViewTimer, bombTextViewTimer;
-    private  TextView textString;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -62,20 +97,6 @@ public class GameFragment extends Fragment {
     }
 
 
-
-    // declare timers
-    private CountDownTimer gameCountDownTimer;
-    private CountDownTimer bombCountDownTimer;
-    private boolean gameTimerRunning;
-    private boolean bombTimerRunning;
-    private static final long START_GAME_TIME_IN_MILLIS = 200000;
-    private static final long START_BOMB_TIME_IN_MILLIS = 30000;
-    private long gameTimeLeftInMillis = START_GAME_TIME_IN_MILLIS;
-    private long bombTimeLeftInMillis = START_BOMB_TIME_IN_MILLIS;
-    private String gameTimeLeftStr="";
-    private String bombTimeLeftStr="";
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +104,7 @@ public class GameFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-       // Toast.makeText(getContext(),"GAME FRAGMENT",Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getContext(),"GAME FRAGMENT",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -98,63 +119,79 @@ public class GameFragment extends Fragment {
 
 
         // update UI EditText with values from viewModel
-        TextView winnerText = (TextView) view.findViewById(R.id.lblCurrentGameTime);
-        winnerText.setText("WTF");
+      /*  LblGameTime = (TextView) view.findViewById(R.id.lblCurrentGameTime);
+        LblGameTime.setText(GameTime);
+        LblBombTime = (TextView) view.findViewById(R.id.lblCurrentBombTime);
+        LblBombTime.setText(BombTime);*/
 
+
+        TxtEnteredPinCode = (TextView) view.findViewById(R.id.txtGamePinCode);
+        LblGameStatusArmDisarmed = (TextView) view.findViewById(R.id.lblGameStatus);
         // mainactivity and fragment share data1
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         // restore values on startup
         // ((MainActivity)getActivity()).restoreSettings();
-       // restoreSettings();
+        // restoreSettings();
         // get values from viewModel
-
+// BUTTON START TIMER
+        Button btnDebug = (Button) view.findViewById(R.id.btnDebugAttackerWin);
+        btnDebug.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start game timer
+                GameFinished = true;
+                WinnerName = "DEBUG WIN";
+                UpdateGameStatus();
+            } // end onClick
+        });
 
 // BUTTON START TIMER
-        Button btnStartTimer =(Button) view.findViewById(R.id.btnStartTimer);
+/*        Button btnStartTimer = (Button) view.findViewById(R.id.btnStartTimer);
         btnStartTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // start game timer
-                if (gameTimerRunning) {
+                if (GameTimerRunning) {
                     pauseGameTimer();
                     pauseBombTimer();
-
                 } else {
                     startGameTimer();
-                    startBombTimer();
-                }
-                // fragment.setNewText("Your Text");
-                // code here without if
-                // gameFragmentObj.setNewText("Hello world");
 
+                } // end if
 
-            }
-        });
+            } // end onClick
+        });*/
 
 // BUTTON ARM DEFUSE
         Button btnArmDefuse = (Button) view.findViewById(R.id.btnArmDefuse);
-        btnArmDefuse.setOnClickListener(new View.OnClickListener()
-        {
+        BtnArmDisarmBtn = (Button) view.findViewById(R.id.btnArmDefuse);
+        btnArmDefuse.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-               // Toast.makeText(getContext(),"ARMED",Toast.LENGTH_SHORT).show();
-                restoreSettings();
+            public void onClick(View v) {
+                // Toast.makeText(getContext(),"ARMED",Toast.LENGTH_SHORT).show();
+                // restoreSettings();
+                String txtEnteredPin = TxtEnteredPinCode.getText().toString();
+                if (txtEnteredPin != null && !txtEnteredPin.isEmpty()) {
+                    Log.d("startGameTimer", "btnArmDefuse if - STRING VALUE = " + txtEnteredPin);
+                } else {
+                    txtEnteredPin = "0";
+                    Log.d("startGameTimer", "btnArmDefuse else - STRING VALUE = " + txtEnteredPin);
+                }
+
+                BombArmDisarm(StateBombArmed, txtEnteredPin);
 
             }
         });
 
 // BUTTON END GAME
         Button btnEndGame = (Button) view.findViewById(R.id.btnEndGame);
-        btnEndGame.setOnClickListener(new View.OnClickListener()
-        {
+        btnEndGame.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Toast.makeText(getContext(),"END GAME",Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "END GAME", Toast.LENGTH_SHORT).show();
 
                 // cancel "pause" and reset both timer on end game
-                if (gameTimerRunning) {
+                if (GameTimerRunning) {
                     pauseGameTimer();
                     resetGameTimer();
 
@@ -163,7 +200,7 @@ public class GameFragment extends Fragment {
                 }
 
                 // Show setup fragment
-               SetupFragment setupFrag= new SetupFragment();
+                SetupFragment setupFrag = new SetupFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.game_fragment_id, setupFrag, "game_fragment_id")
                         .addToBackStack(null)
@@ -179,65 +216,87 @@ public class GameFragment extends Fragment {
 
 
 
-
-    public String currentGameTime;
-    public String currentBombTime;
-    public TextView lblCurrentGameTimeTxt;
-    public Button btnPlant;
-
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d("GameFragment", "onViewCreated");
         restoreSettings();
+        StartGameOnOpen();
 
+        // get timer values on startup, bomb time startup fix because is not started
+        int gameTimeInt = Integer.parseInt(GameTime);
+        GameTimeLeftInMillis = gameTimeInt * 60000L;
+
+        int bombTimeInt = Integer.parseInt(BombTime);
+        BombTimeLeftInMillis = bombTimeInt * 60000L;
+
+        UpdateGameCountDownText();
     }
 
+
+    private void StartGameOnOpen() {
+        if (GameTimerRunning) {
+            pauseGameTimer();
+            pauseBombTimer();
+
+        } else {
+            startGameTimer();
+            // startBombTimer();
+        }
+
+
+    }
 
     // GAME TIMER - START
     private void startGameTimer() {
         // timer config
-         int gameTimeInt= Integer.parseInt(GameTime);
-        gameTimeLeftInMillis=gameTimeInt*60000;
+        int gameTimeInt = Integer.parseInt(GameTime);
+        GameTimeLeftInMillis = gameTimeInt * 6000L;// CHANGE BACK TO 60000 when finished testing
 
 
-        gameCountDownTimer = new CountDownTimer(gameTimeLeftInMillis, 1000) {
+        gameCountDownTimer = new CountDownTimer(GameTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                gameTimeLeftInMillis = millisUntilFinished;
-                Log.d("startGameTimer", "Timer Value:"+gameTimeLeftInMillis);
-                updateGameCountDownText();
+                GameTimeLeftInMillis = millisUntilFinished;
+                Log.d("startGameTimer", "Timer Value:" + GameTimeLeftInMillis);
+                UpdateGameCountDownText();
 
             }
 
             @Override
             public void onFinish() {
-                gameTimerRunning = false;
-                gameTimeLeftInMillis = 0;
+                GameTimerRunning = false;
+                GameTimerFinished = true;
+                GameTimeLeftInMillis = 0;
+                GameFinished = true;
                 Log.d("startGameTimer", "Timer FINISHED");
-                updateGameCountDownText();
+                UpdateGameCountDownText();
+                UpdateGameStatus();
                 // mButtonStartPause.setText("Start");
                 //mButtonStartPause.setVisibility(View.INVISIBLE);
                 //mButtonReset.setVisibility(View.VISIBLE);
             }
         }.start();
         Log.d("startGameTimer", "Timer STARTED");
-        gameTimerRunning = true;
+        GameTimerRunning = true;
         //mButtonStartPause.setText("pause");
         //mButtonReset.setVisibility(View.INVISIBLE);
     }
 
     private void pauseGameTimer() {
-        gameCountDownTimer.cancel();
-        gameTimerRunning = false;
-        Log.d("pauseGameTimer", "Timer PAUSED");
+        if (GameTimerRunning) {
+            gameCountDownTimer.cancel();
+            GameTimerRunning = false;
+            GameTimerFinished = false;
+            Log.d("pauseGameTimer", "Timer PAUSED");
+        }
+
         //mButtonStartPause.setText("Start");
         // mButtonReset.setVisibility(View.VISIBLE);
     }
 
     private void resetGameTimer() {
-        gameTimeLeftInMillis = START_GAME_TIME_IN_MILLIS;
+        GameTimeLeftInMillis = START_GAME_TIME_IN_MILLIS;
         // updateGameCountDownText();
         //mButtonReset.setVisibility(View.INVISIBLE);
         // mButtonStartPause.setVisibility(View.VISIBLE);
@@ -248,45 +307,55 @@ public class GameFragment extends Fragment {
     // BOMB TIMER - START
     private void startBombTimer() {
         // timer config
-        int gameTimeInt= Integer.parseInt(BombTime.toString());
-        bombTimeLeftInMillis=gameTimeInt*60000;
+        int bombTimeInt = Integer.parseInt(BombTime.toString());
+        BombTimeLeftInMillis = bombTimeInt * 6000L; // CHANGE BACK TO 60000 when finished testing
 
-        bombCountDownTimer = new CountDownTimer(bombTimeLeftInMillis, 1000) {
+        bombCountDownTimer = new CountDownTimer(BombTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                bombTimeLeftInMillis = millisUntilFinished;
-                Log.d("startBombTimer", "Timer Value:"+bombTimeLeftInMillis);
-                updateGameCountDownText();
+                BombTimeLeftInMillis = millisUntilFinished;
+                Log.d("startBombTimer", "Timer Value:" + BombTimeLeftInMillis);
+                UpdateGameCountDownText();
 
             }
 
             @Override
             public void onFinish() {
-                bombTimerRunning = false;
-                bombTimeLeftInMillis = 0;
+                BombTimerRunning = false;
+                BombTimeLeftInMillis = 0;
+                BombTimerFinished = true;
+                GameFinished = true;
                 Log.d("startBombTimer", "Timer FINISHED");
-                updateGameCountDownText();
+                UpdateGameCountDownText();
+                UpdateGameStatus();
                 // mButtonStartPause.setText("Start");
                 //mButtonStartPause.setVisibility(View.INVISIBLE);
                 //mButtonReset.setVisibility(View.VISIBLE);
             }
         }.start();
         Log.d("startBombTimer", "Timer STARTED");
-        bombTimerRunning = true;
+        BombTimerRunning = true;
         //mButtonStartPause.setText("pause");
         //mButtonReset.setVisibility(View.INVISIBLE);
     }
 
     private void pauseBombTimer() {
-        bombCountDownTimer.cancel();
-        bombTimerRunning = false;
-        Log.d("pauseBombTimer", "Timer PAUSED");
+        if (BombTimerRunning) {
+            bombCountDownTimer.cancel();
+            BombTimerRunning = false;
+            BombTimerFinished = false;
+            Log.d("pauseBombTimer", "Timer PAUSED");
+        }
+
         //mButtonStartPause.setText("Start");
         // mButtonReset.setVisibility(View.VISIBLE);
     }
 
     private void resetBombTimer() {
-        bombTimeLeftInMillis = START_BOMB_TIME_IN_MILLIS;
+        // when bomb time is reset, get init value for display
+        int bombTimeInt = Integer.parseInt(BombTime);
+        BombTimeLeftInMillis = bombTimeInt * 60000L;
+        // BombTimeLeftInMillis = START_BOMB_TIME_IN_MILLIS;
         // updateGameCountDownText();
         //mButtonReset.setVisibility(View.INVISIBLE);
         // mButtonStartPause.setVisibility(View.VISIBLE);
@@ -295,96 +364,90 @@ public class GameFragment extends Fragment {
     // BOMB TIMER - END
 
 
-    public void setFragTextView(String text, int R_id_resource){
-        TextView FcTextView = (TextView) getView().findViewById(R_id_resource);
+    public void SetFragTextView(String text, int r_id_resource) {
+        Log.d("SetFragTextView", text + "-" + r_id_resource);
+        TextView FcTextView = (TextView) getView().findViewById(r_id_resource);
         FcTextView.setText(text);
     }
 
 
-    private void updateGameCountDownText() {
-     /*   int minutes = (int) (gameTimeLeftInMillis / 1000) / 60;
-        int seconds = (int) (gameTimeLeftInMillis / 1000) % 60;
-
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-*/
-
+    private void UpdateGameCountDownText() {
+        // Log.d("UpdateGameCountDownText", "Format game timer");
         // format game timer
-        int gameTmrMinutes = (int) (gameTimeLeftInMillis / 1000) / 60;
-        int gameTmrSeconds = (int) (gameTimeLeftInMillis / 1000) % 60;
+        int gameTmrMinutes = (int) (GameTimeLeftInMillis / 1000) / 60;
+        int gameTmrSeconds = (int) (GameTimeLeftInMillis / 1000) % 60;
 
         String gameTimeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", gameTmrMinutes, gameTmrSeconds);
-
+        // Log.d("UpdateGameCountDownText", "Format bomb timer");
         // format bomb timer
-        int bombTmrMinutes = (int) (bombTimeLeftInMillis / 1000) / 60;
-        int bombTmrSeconds = (int) (bombTimeLeftInMillis / 1000) % 60;
+        int bombTmrMinutes = (int) (BombTimeLeftInMillis / 1000) / 60;
+        int bombTmrSeconds = (int) (BombTimeLeftInMillis / 1000) % 60;
 
         String bombTimeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", bombTmrMinutes, bombTmrSeconds);
 
-        // finish
-        gameTimeLeftStr=gameTimeLeftFormatted;
-        bombTimeLeftStr=bombTimeLeftFormatted;
+        //  Log.d("UpdateGameCountDownText", "Format strings to global");
+        // timer strings ready
+        GameTimeLeft = gameTimeLeftFormatted;
+        BombTimeLeft = bombTimeLeftFormatted;
 
-        // update game time
-        setFragTextView(gameTimeLeftStr,R.id.lblCurrentGameTime);
-        // update bomb time
-        setFragTextView(bombTimeLeftStr,R.id.lblCurrentBombTime);
-
-    }
-
-    public void changeFragmentTextView(String gameTime, String bombTime) {
-
-        // mainactivity and fragment share data1
-        viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-
-        // set current times to share prefs
-        viewModel.setCurrentGameTime(gameTime);
-        viewModel.setCurrentBombTime(bombTime);
+        Log.d("UpdateGameCountDownText", "SetFragTextView UI with timer values " + GameTimeLeft + "-" + BombTimeLeft);
+        // update game and bomb time
+        SetFragTextView(GameTimeLeft, R.id.lblCurrentGameTime);
+        SetFragTextView(BombTimeLeft, R.id.lblCurrentBombTime);
 
     }
 
-
-    public void bombArmDisarm (boolean bombArmed, String pinEnterCodeStr){
+    public void BombArmDisarm(boolean isBombArmed, String pinEnterCodeStr) {
 
         int pinCodeEntInt = Integer.parseInt(pinEnterCodeStr.toString()); // entered pin code
-        int pinCodeArmReqInt = Integer.parseInt(pinEnterCodeStr.toString());
-        int pinCodeDisarmReqInt = Integer.parseInt(pinEnterCodeStr.toString());
+        int pinCodeArmReqInt = Integer.parseInt(ArmPinCode.toString());
+        int pinCodeDisarmReqInt = Integer.parseInt(DisarmPinCode.toString());
 
-        if (bombArmed && pinCodeEntInt==pinCodeEntInt) {
-            Log.d("bombArmDisarm", "Bomb DISARM");
+        if (isBombArmed && pinCodeEntInt == pinCodeDisarmReqInt) {
 
-       /*     pauseBombTimer();
-            resetBombTimer();*/
-        }
-        else if (!bombArmed && pinCodeEntInt==pinCodeEntInt){
+            pauseBombTimer();
+            resetBombTimer();   // disarmed, reset timer
+            StateBombArmed = false; // bomb disarmed
 
-            Log.d("bombArmDisarm", "Bomb ARMED");
+            TxtEnteredPinCode.setText(""); // clear entered code
+            BtnArmDisarmBtn.setText("ARM");
+            LblGameStatusArmDisarmed.setText("BOMB DISARMED");
+            UpdateGameStatus();
+            Log.d("bombArmDisarm", "Bomb DISARMED." + pinCodeEntInt + "-" + pinCodeDisarmReqInt + "-" + StateBombArmed);
+            //  Toast.makeText(getContext(), "Bomb DISARMED", Toast.LENGTH_SHORT).show();
 
-        }
-        else{
+        } else if (!isBombArmed && pinCodeEntInt == pinCodeArmReqInt) {
+            startBombTimer();   // armed, start timer
+            StateBombArmed = true;      // bomb is armed
 
-            Log.d("bombArmDisarm", "UNDEFINED STATE");
+            TxtEnteredPinCode.setText(""); // clear entered code
+            BtnArmDisarmBtn.setText("DISARM");
+            LblGameStatusArmDisarmed.setText("!!! BOMB ARMED !!!");
+            UpdateGameStatus();
+            Log.d("bombArmDisarm", "Bomb ARMED." + "pinCodeEntInt." + pinCodeEntInt + "-pinCodeDisarmReqInt:"
+                    + pinCodeDisarmReqInt + "-StateBombArmed=" + StateBombArmed);
+            //  Toast.makeText(getContext(), "Bomb ARMED", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.d("bombArmDisarm", "WRONG PIN" + pinCodeEntInt + "-" + pinCodeDisarmReqInt + "-" + StateBombArmed);
+            TxtEnteredPinCode.setText(""); // clear entered code
+            Toast.makeText(getContext(), "WRONG PIN", Toast.LENGTH_SHORT).show();
+
         }
 
     }
 
-    private ItemViewModel viewModel;
-    public String GameTime;
-    public String BombTime;
-    public String ArmPinCode;
-    public String DisarmPinCode;
 
-    public void restoreSettings()
-    {
-        Log.d("GameFragment", "restoreSettings START");
+    public void restoreSettings() {
+        // Log.d("GameFragment", "restoreSettings START");
 
         SharedPreferences sh = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-        Log.d("GameFragment", "restoreSettings Getting values from SharedPrefs ...");
+        //  Log.d("GameFragment", "restoreSettings Getting values from SharedPrefs ...");
 
-        String SpGameTimerVal = sh.getString("GameTimerStrValue", "");
-        String SpBombTimerVal = sh.getString("BombTimerStrValue", "");
-        String SpArmPinCodeVal = sh.getString("ArmPinCodeStrValue", "");
-        String SpDisarmPinCodeVal = sh.getString("DisarmPinCodeStrValue", "");
-        Log.d("GameFragment", "restoreSettings Passing values to Fragment with viewModel ...");
+        String SpGameTimerVal = sh.getString("GameTimerStrValue", "10");
+        String SpBombTimerVal = sh.getString("BombTimerStrValue", "5");
+        String SpArmPinCodeVal = sh.getString("ArmPinCodeStrValue", "1234");
+        String SpDisarmPinCodeVal = sh.getString("DisarmPinCodeStrValue", "5678");
+        //  Log.d("GameFragment", "restoreSettings Passing values to Fragment with viewModel ...");
 
         // mainactivity and fragment share data1
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
@@ -393,14 +456,79 @@ public class GameFragment extends Fragment {
         viewModel.setFragBombTime(SpBombTimerVal);
         viewModel.setFragArmPinCode(SpArmPinCodeVal);
         viewModel.setFragDisarmPinCode(SpDisarmPinCodeVal);
-        viewModel.setFragWinnerName("DEFENDERS");
-        Log.d("GameFragment", "restoreSettings viewModel setValues DONE");
+        viewModel.setFragWinnerName(WinnerName); // global
+        //   Log.d("GameFragment", "restoreSettings viewModel setValues DONE");
 
-        GameTime=viewModel.getFragGameTime().getValue();
-        BombTime=viewModel.getFragBombTime().getValue();
-        ArmPinCode=viewModel.getFragArmPinCode().getValue();
-        DisarmPinCode=viewModel.getFragDisarmPinCode().getValue();
-        Log.d("GameFragment", "restoreSettings viewModel getValues DONE "+GameTime+"-"+BombTime+"-"+ArmPinCode+"-"+DisarmPinCode);
+        GameTime = viewModel.getFragGameTime().getValue();
+        BombTime = viewModel.getFragBombTime().getValue();
+        ArmPinCode = viewModel.getFragArmPinCode().getValue();
+        DisarmPinCode = viewModel.getFragDisarmPinCode().getValue();
+        Log.d("GameFragment", "restoreSettings viewModel getValues DONE " + GameTime + "-" + BombTime + "-" + ArmPinCode + "-" + DisarmPinCode);
+    }
+
+    public void UpdateGameStatus() { //String btnArmValue, String lblGameStatusValue
+
+        if (StateBombArmed) {
+            TxtEnteredPinCode.setText(""); // clear entered code
+            LblGameStatusArmDisarmed.setTextAppearance(getContext(), R.style.ArmedText);
+        } else {
+            TxtEnteredPinCode.setText(""); // clear entered code
+            LblGameStatusArmDisarmed.setTextAppearance(getContext(), R.style.DisarmedText);
+        }
+        UpdateGameCountDownText(); // calling this updates UI immediate after state changed, not waiting for timer tick
+        BlinkGameStatus(StateBombArmed);
+
+        // is timer finished, set who won
+        if (GameTimerFinished) {
+            WinnerName = "Defenders WIN";
+
+            GameFinished = true;
+        } else if (BombTimerFinished) {
+            WinnerName = "Attackers WIN";
+            GameFinished = true;
+        } else {
+            WinnerName = "DRAW";
+            //  GameFinished=true;
+        }
+
+        // if game ended show winner name
+        if (GameFinished) {
+            pauseGameTimer();
+            pauseBombTimer();
+            resetGameTimer();
+            resetBombTimer();
+
+            GameFinished = false;
+
+            viewModel = new ViewModelProvider(getActivity()).get(ItemViewModel.class);
+            viewModel.setFragWinnerName(WinnerName);
+            VictoryFragment victoryFrag = new VictoryFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.game_fragment_id, victoryFrag, "game_fragment_id")
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+    }
+
+    public void BlinkGameStatus(boolean isArmed) {
+
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+
+        if (isArmed) {
+            anim.setDuration(150); //You can manage the blinking time with this parameter
+            anim.setStartOffset(120);
+            anim.setRepeatMode(Animation.REVERSE);
+            anim.setRepeatCount(Animation.INFINITE);
+            LblGameStatusArmDisarmed.startAnimation(anim);
+            Log.d("GameFragment", "BlinkGameStatus BLINK ON");
+        } else {
+            LblGameStatusArmDisarmed.clearAnimation();
+
+            Log.d("GameFragment", "BlinkGameStatus BLINK OFF");
+        }
+
+
     }
 
 }

@@ -3,24 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/victory_frame_layout"
+    android:paddingLeft="@dimen/layout_padding_distance"
+    android:paddingRight="@dimen/layout_padding_distance"
+    android:paddingBottom="@dimen/layout_padding_distance"
+    android:paddingTop="@dimen/layout_padding_distance"
+    android:id="@+id/victory_frag_id"
     android:background="@color/black"
     android:imeOptions="actionDone"
     tools:context=".VictoryFragment">
-
     <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:id="@+id/victoryFragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/lbl_Winner_Victory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:paddingLeft="22dp"
-        android:paddingTop="22dp"
-        android:paddingRight="22dp"
-        android:paddingBottom="22dp"
         android:text="@string/lbl_Winner_Victory"
-        android:textColor="@color/white"
         android:textAlignment="center"
-        android:textSize="@dimen/main_textView_size" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/Victory_TextView_size" />
+
+    <Button
+        android:id="@+id/btnRestartGameVictory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/victoryFragment_container"
+        android:layout_alignParentBottom="true"
+        android:text="Restart" />
+
+    <Button
+        android:id="@+id/btnEndGameVictory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/victoryFragment_container"
+        android:layout_alignParentBottom="true"
+        android:text="End" />
 
 </RelativeLayout>

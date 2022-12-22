@@ -85,6 +85,7 @@ public class VictoryFragment extends Fragment {
 
     private ItemViewModel viewModel;
     public String WinnerName;
+    public TextView winnerText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,17 +94,40 @@ public class VictoryFragment extends Fragment {
 
         // -- inflate the layout for this fragment
         View myInflatedView = inflater.inflate(R.layout.fragment_victory, container,false);
+        // mainactivity and fragment share data1
+       // viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(ItemViewModel.class);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        //viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
+
+        // update UI EditText with values from viewModel
+        winnerText = (TextView) myInflatedView.findViewById(R.id.lbl_Winner_Victory);
+        winnerText.setText(WinnerName);
+
+
+        return myInflatedView;
+
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
         // get values from viewModel
         WinnerName=viewModel.getFragWinnerName().getValue();
 
-        // update UI EditText with values from viewModel
-        TextView winnerText = (TextView) myInflatedView.findViewById(R.id.lbl_Winner_Victory);
         winnerText.setText(WinnerName);
-        TextViewCompat.setTextAppearance(winnerText, R.style.attackers_win_style);
 
-        return myInflatedView;
+        if (WinnerName=="Attackers WIN"){
+            TextViewCompat.setTextAppearance(winnerText, R.style.attackers_win_style);
+        }
+        else{
+            TextViewCompat.setTextAppearance(winnerText, R.style.defenders_win_style);
+
+        }
+
 
     }
     public void setText(String text) {

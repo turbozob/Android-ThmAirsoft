@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_textView_size">25sp</dimen>
+    <dimen name="main_editText_size">25sp</dimen>
+    <dimen name="GameStatus_TextView_size">40sp</dimen>
+    <dimen name="main_marginHoriz_distance">15sp</dimen>
+    <dimen name="main_marginVert_distance">25sp</dimen>
+    <dimen name="layout_padding_distance">5sp</dimen>
+    <dimen name="Victory_TextView_size">100sp</dimen>
+</resources>

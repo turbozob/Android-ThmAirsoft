@@ -19,6 +19,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
 import android.content.SharedPreferences;
 
 import java.util.Locale;
@@ -26,15 +27,15 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     // Public variables
-boolean setupScreen=false;
+    boolean DebugMode = false;
+    boolean DebugButtonsEnabled = false;
+    boolean DebugTextViewEnabled = false;
 
-// share data between activity and fragment
-/*private ItemViewModel viewModel;*/
+    // share data between activity and fragment
     private ItemViewModel viewModel;
-    private EditText GameTimerEditText, BombTimerEditText,ArmPinCodeEditText,DisarmPinCodeEditText;
-    private int GameTimerIntValue,BombTimerIntValue,ArmPinCodeIntValue,DisarmPinCodeIntValue;
-    public String GameTimerStrValue,BombTimerStrValue,ArmPinCodeStrValue,DisarmPinCodeStrValue;
 
+    private EditText GameTimerEditText, BombTimerEditText, ArmPinCodeEditText, DisarmPinCodeEditText;
+    public String GameTimerStrValue, BombTimerStrValue, ArmPinCodeStrValue, DisarmPinCodeStrValue, WinnerNameStrValue;
 
 
     //ON RESUME MAIN ACTIVITY EVENT
@@ -43,7 +44,7 @@ boolean setupScreen=false;
         super.onPause();
         // NOT USED - DELETE LATER
         Log.d("MainActivity", "onPause STARTED");
-      //  saveSettings();
+        //  saveSettings();
     }
 
     //ON STOP MAIN ACTIVITY EVENT
@@ -52,7 +53,7 @@ boolean setupScreen=false;
         super.onStop();
         // NOT USED - DELETE LATER
         Log.d("MainActivity", "onStop STARTED");
-      //  SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        //  SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
     }
 
     //ON STOP MAIN ACTIVITY EVENT
@@ -70,19 +71,18 @@ boolean setupScreen=false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("MainActivity", "onCreate STARTED");
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment_container,
                 new SetupFragment()).commit();
         Log.d("MainActivity", "SetupFragment COMMITTED");
-        setupScreen=true;   // active screen flag
 
         Log.d("MainActivity", "define global editText's");
         // define global textboxes for tags
-        GameTimerEditText=findViewById(R.id.txtGameTime);
-        BombTimerEditText=findViewById(R.id.txtBombTime);
-        ArmPinCodeEditText=findViewById(R.id.txtArmPinCode);
-        DisarmPinCodeEditText=findViewById(R.id.txtDisarmPinCode);
+        GameTimerEditText = findViewById(R.id.txtGameTime);
+        BombTimerEditText = findViewById(R.id.txtBombTime);
+        ArmPinCodeEditText = findViewById(R.id.txtArmPinCode);
+        DisarmPinCodeEditText = findViewById(R.id.txtDisarmPinCode);
 
-       // restoreSettings();
+        // restoreSettings();
 
 // settings default values on startup
     /*    viewModel.setFragGameTime("60");
@@ -91,60 +91,60 @@ boolean setupScreen=false;
         viewModel.setFragDisarmPinCode("5678");*/
 
 // open setup fragment on startup
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment_container,
                 new SetupFragment()).commit();
 
     } // END onCreate
 
-        public void saveSettings()
-        {
-            Log.d("saveSettings", "START");
-            // define global textboxes for tags1
-            // use getView(). to get current view otherwise wrong findViewById is used and not current text is used
-            //setContentView(R.layout.activity_main);
-           // setContentView(R.layout.fragment_setup);
-            GameTimerEditText=findViewById(R.id.txtGameTime);
-            BombTimerEditText=(EditText)findViewById(R.id.txtBombTime);
-            ArmPinCodeEditText=(EditText)findViewById(R.id.txtArmPinCode);
-            DisarmPinCodeEditText=(EditText)findViewById(R.id.txtDisarmPinCode);
+    public void saveSettings() {
+        Log.d("saveSettings", "START");
+        // define global textboxes for tags1
+        // use getView(). to get current view otherwise wrong findViewById is used and not current text is used
+        //setContentView(R.layout.activity_main);
+        // setContentView(R.layout.fragment_setup);
+        GameTimerEditText = findViewById(R.id.txtGameTime);
+        BombTimerEditText = (EditText) findViewById(R.id.txtBombTime);
+        ArmPinCodeEditText = (EditText) findViewById(R.id.txtArmPinCode);
+        DisarmPinCodeEditText = (EditText) findViewById(R.id.txtDisarmPinCode);
 
-            // Creating a shared pref object
-            // with a file name "MySharedPref"1
-            // in private mode
-            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor mySettings = sharedPreferences.edit();
+        // Creating a shared pref object
+        // with a file name "MySharedPref"1
+        // in private mode
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor mySettings = sharedPreferences.edit();
 
-            Log.d("saveSettings", "GET TEXT FROM EDITTEXT");
-            GameTimerStrValue=GameTimerEditText.getText().toString();
-            BombTimerStrValue=BombTimerEditText.getText().toString();
-            ArmPinCodeStrValue=ArmPinCodeEditText.getText().toString();
-            DisarmPinCodeStrValue=DisarmPinCodeEditText.getText().toString();
-
-
-            Log.d("saveSettings", "SAVING DATA "+GameTimerStrValue+"-"+BombTimerStrValue+"-"+ArmPinCodeStrValue+"-"+DisarmPinCodeStrValue);
-            // write all the data entered by the user in SharedPreference and apply
-            mySettings.putString("GameTimerStrValue", GameTimerStrValue);
-            mySettings.putString("BombTimerStrValue", BombTimerStrValue);
-            mySettings.putString("ArmPinCodeStrValue", ArmPinCodeStrValue);
-            mySettings.putString("DisarmPinCodeStrValue", DisarmPinCodeStrValue);
-
-            mySettings.apply();
-            Log.d("saveSettings", "DATA SAVED");
-
-        }
+        Log.d("saveSettings", "GET TEXT FROM EDITTEXT");
+        GameTimerStrValue = GameTimerEditText.getText().toString();
+        BombTimerStrValue = BombTimerEditText.getText().toString();
+        ArmPinCodeStrValue = ArmPinCodeEditText.getText().toString();
+        DisarmPinCodeStrValue = DisarmPinCodeEditText.getText().toString();
 
 
-    public void restoreSettings()
-    {
+        Log.d("saveSettings", "SAVING DATA " + GameTimerStrValue + "-" + BombTimerStrValue + "-" + ArmPinCodeStrValue + "-" + DisarmPinCodeStrValue);
+        // write all the data entered by the user in SharedPreference and apply
+        mySettings.putString("GameTimerStrValue", GameTimerStrValue);
+        mySettings.putString("BombTimerStrValue", BombTimerStrValue);
+        mySettings.putString("ArmPinCodeStrValue", ArmPinCodeStrValue);
+        mySettings.putString("DisarmPinCodeStrValue", DisarmPinCodeStrValue);
+        mySettings.putString("WinnerStrValue",WinnerNameStrValue);
+
+        mySettings.apply();
+        Log.d("saveSettings", "DATA SAVED");
+
+    }
+
+
+    public void restoreSettings() {
         Log.d("restoreSettings", "START");
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         Log.d("restoreSettings", "Getting values from SharedPrefs ...");
 
-        String SpGameTimerVal = sh.getString("GameTimerStrValue", "");
-        String SpBombTimerVal = sh.getString("BombTimerStrValue", "");
-        String SpArmPinCodeVal = sh.getString("ArmPinCodeStrValue", "");
-        String SpDisarmPinCodeVal = sh.getString("DisarmPinCodeStrValue", "");
+        String SpGameTimerVal = sh.getString("GameTimerStrValue", "10");
+        String SpBombTimerVal = sh.getString("BombTimerStrValue", "5");
+        String SpArmPinCodeVal = sh.getString("ArmPinCodeStrValue", "1234");
+        String SpDisarmPinCodeVal = sh.getString("DisarmPinCodeStrValue", "5678");
+        String SpWinnerVal = sh.getString("WinnerStrValue", "Default Winner");
         Log.d("restoreSettings", "Passing values to Fragment with viewModel ...");
 
         // mainactivity and fragment share data1
@@ -154,7 +154,7 @@ boolean setupScreen=false;
         viewModel.setFragBombTime(SpBombTimerVal);
         viewModel.setFragArmPinCode(SpArmPinCodeVal);
         viewModel.setFragDisarmPinCode(SpDisarmPinCodeVal);
-        viewModel.setFragWinnerName("DEFENDERS");
+        viewModel.setFragWinnerName(SpWinnerVal);
         Log.d("restoreSettings", "DATA RESTORED");
 
     }

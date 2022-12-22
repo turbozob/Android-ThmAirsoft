@@ -4,8 +4,12 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:capitalize">characters</item>
-        <item name="android:textSize">12pt</item>
-        <item name="android:textColor">#ffffff</item>/>
+        <item name="android:textSize">@dimen/Victory_TextView_size</item>
+        <item name="android:textColor">#E91E63</item>
+        <item name="android:background">@color/Red</item>
 
+
+
+        />
     </style>
 </resources>
